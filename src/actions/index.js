@@ -21,7 +21,7 @@ export const alienListCall = () => {
       .then(response => response.json())
       .then(
         (jsonifiedResponse) => {
-          dispatch(getAlienListSuccess(jsonifiedResponse.results));
+          dispatch(getAlienListSuccess(jsonifiedResponse));
         })
       .catch((error) => {
         dispatch(getFailure(error));

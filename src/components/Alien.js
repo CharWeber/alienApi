@@ -1,9 +1,12 @@
 import React from "react";
 
-export default function Alien(){
+export default function Alien(props){
 
   return(
-    <h1>this is an alien from the spaceship earth</h1>
+    <div>
+      <h1>{props.name}</h1>
+      <h3>{props.description}</h3>
+    </div>
   )
 }
 

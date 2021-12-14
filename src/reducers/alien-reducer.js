@@ -1,7 +1,7 @@
 import * as c from './../actions/ActionTypes'
 
 const defaultState = {
-  isLoading: false,
+  isLoaded: false,
   aliens: [],
   error: null
 }
@@ -11,17 +11,17 @@ export default (state = defaultState, action) => {
   switch (type) {
     case c.REQUEST_ALIEN_LIST:
       return Object.assign({}, state, {
-        isLoading: true,
+        isLoaded: false,
       });
     case c.GET_ALIEN_LIST_SUCCESS:
       return Object.assign({}, state, {
-        isLoading: false,
-        aliens
+        isLoaded: true,
+        aliens: aliens
       })
     case c.GET_FAILURE:
       return Object.assign({}, state, {
-        isLoading: false,
-        error
+        isLoaded: true,
+        error: error
       })
       default:
       return state;

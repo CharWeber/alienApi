@@ -2,12 +2,22 @@ import React from 'react';
 import ReactDOM from 'react-dom';
 import './index.css';
 import App from './App';
+import { createStore, applyMiddleware } from 'redux';
+import alienReducer from './reducers/alien-reducer';
+import { Provider } from 'react-redux';
+import thunkMiddleware from "redux-thunk";
+import middlewareLogger from './middleware/middleware-logger';
 
+// import { ReactReduxFirebaseProvider } from 'react-redux-firebase';
+// import { createFirestoreInstance } from 'redux-firestore';
+// import firebase from "./firebase";
+
+const store = createStore(alienReducer, applyMiddleware(middlewareLogger, thunkMiddleware));
 
 ReactDOM.render(
-  <React.StrictMode>
+  <Provider store={store}>
     <App />
-  </React.StrictMode>,
+  </Provider>,
   document.getElementById('root')
 );
 
