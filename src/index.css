@@ -33,3 +33,11 @@ code {
   display: block;
   margin: auto;
 }
+ul{
+  list-style: none;
+  padding-left:0;
+}
+
+.MuiTouchRipple-root {
+  overflow:visible;
+}

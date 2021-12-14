@@ -74,3 +74,26 @@ export const alienListDelete = (id) => {
   }
 }
 
+export const alienListPut = (id, newAlien) => {
+  console.log(newAlien)
+  const stringifiedAlien = JSON.stringify(newAlien);
+  return dispatch => {
+    dispatch(requestAlienList);
+    return fetch(`https://localhost:5001/api/Aliens/${id}`,
+    {
+      method: 'PUT',
+      headers: { 'Content-Type': 'application/json' },
+      body: stringifiedAlien
+    })
+    // .then(response => response.json())
+    .then(
+      (response) => {
+        if (response) {
+        dispatch(alienListCall());
+        }
+      })
+    .catch((error) => {
+      dispatch(getFailure(error));
+    })
+  }
+}

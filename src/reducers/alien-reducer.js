@@ -4,6 +4,8 @@ const defaultState = {
   isLoaded: false,
   aliens: [],
   error: null,
+  selectedAlien: null,
+  editing: false
 }
 
 export default (state = defaultState, action) => {
@@ -17,11 +19,16 @@ export default (state = defaultState, action) => {
       return Object.assign({}, state, {
         isLoaded: true,
         aliens: aliens,
+        // selectedAlien: null,
+        // editing: false
+
       })
     case c.GET_FAILURE:
       return Object.assign({}, state, {
         isLoaded: true,
-        error: error
+        error: error,
+        // selectedAlien: null,
+        // editing: false
       })
     // case c.CREATE_NEW_ALIEN:
     //   return Object.assign({}, state, {

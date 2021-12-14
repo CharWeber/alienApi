@@ -5,7 +5,7 @@ import AlienControl from './components/AlienControl';
 function App() {
   return (
     <React.Fragment>
-      <div class="container">
+      <div className="container">
       <Header />
         <AlienControl />
       </div>

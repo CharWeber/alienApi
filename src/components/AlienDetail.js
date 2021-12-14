@@ -13,7 +13,7 @@ const {alien, handleDeleteAlien, setSelectedAlien} = props
         <li>Planet of Origin: {alien.originPlanet}</li>
         <li>Origin System: {alien.originSystem}</li>
         <li>Planets occupied: {alien.numberOfPlanets}</li>
-        <li>Breathes Oxygen: {alien.breathesOxygen}</li>
+        <li>Breathes Oxygen: {alien.breathesOxygen ? "Yes" : "No" }</li>
       </ul>
       <p> Kardashev rating: {alien.kardashevRating}</p>
       <button onClick={() =>handleDeleteAlien(alien.alienId)}>delete</button>
@@ -25,5 +25,6 @@ const {alien, handleDeleteAlien, setSelectedAlien} = props
 AlienDetail.propType ={
   alien: PropTypes.object,
   handleDeleteAlien: PropTypes.func,
-  setSelectedAlien: PropTypes.func
+  setSelectedAlien: PropTypes.func,
+  setEditing: PropTypes.func,
 }
