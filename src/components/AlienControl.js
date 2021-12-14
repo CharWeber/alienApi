@@ -1,51 +1,96 @@
-import React from "react";
+import React, {useState, useEffect} from "react";
 import AlienList from "./AlienList";
 import { connect } from "react-redux";
-import { alienListCall } from '../actions';
+import { alienListCall, alienListPost } from '../actions';
+import { useDispatch, useSelector } from "react-redux";
+import NewAlienForm from "./NewAlienForm";
 
-class AlienControl extends React.Component {
-  constructor(props) {
-    super(props);
-    this.state = {
-      error: null,
-      isLoaded: false,
-      aliens: []
-    };
+// class AlienControl extends React.Component() {
+//   constructor(props) {
+//     super(props);
+//     this.state = {
+//       error: null,
+//       isLoaded: false,
+//       aliens: []
+//     };
+//   }
+
+// componentDidMount() {
+//   const { dispatch } = this.props;
+//   dispatch(alienListCall());
+// }
+
+function AlienControl() {
+
+  const aliens = useSelector((state) => state.aliens);
+  const error = useSelector((state) => state.error)
+  const dispatch = useDispatch();
+  
+  const [newForm, setNewForm] = useState(false);
+
+  useEffect(() => {
+    // const { dispatch } = this.props;
+    dispatch(alienListCall());
+    // setAliens(this.state.aliens)
+  }, [dispatch]);
+  
+  console.log(aliens)
+  let buttonText= '';
+  let visibleState = null;
+  
+  const handleNewAlien = (newAlien) => {
+    dispatch(alienListPost(newAlien))
   }
 
-componentDidMount() {
-  const {dispatch } = this.props;
-  dispatch(alienListCall());
-  // const aliens = dispatch(alienListCall());
-  // console.log(aliens)
-}
-
-
-
-  render(){
-    const { aliens, error, isLoaded } = this.props;
-
-    if (!isLoaded){
-      return <p>Loading...</p>
-    } else if (error) {
-      return <p>Error: {error.message}</p>
-    } else {
-      return(
-      <div>
-        <h1>This is AlienControl. MIB</h1>
-        {/* <ul>
-            {aliens.map((aliens, index) => (
-              <li key={index}>
-                <h3>{aliens.name}</h3>
-              </li>
-            ))}
-          </ul> */}
-        <AlienList aliens={aliens}/>
-      </div>
+  if (newForm){
+    visibleState = <NewAlienForm handleNewAlien={handleNewAlien}/>
+  } else {
+    visibleState = 
+    <div>
+    <h1>MIB Extra Terrestrial List</h1>
+    <AlienList aliens={aliens}/>
+  </div>
+  }
+  
+  
+  
+  //  if (!isLoaded){
+    //     return <p>Loading...</p>
+    //   } else if (error) {
+      //     return <p>Error: {error.message}</p>
+      //   } else {
+        return(
+          <div>
+            {visibleState}
+            <button onClick={() => setNewForm(!newForm)}>New Alien</button>
+          </div>
     )
+  
+    // make a new alien form, display it using state in the return, probably make a button have a createNewAlien slice of state (use a hook): shows NewAlienForm hides AlienList
   }
-}
-}
+// }
+
+  
+
+  // render(){
+  //   const { aliens, error, isLoaded } = this.props;
+
+  //   if (!isLoaded){
+  //     return <p>Loading...</p>
+  //   } else if (error) {
+  //     return <p>Error: {error.message}</p>
+  //   } else {
+  //     return(
+  //     <div>
+  //       <h1>MIB Extra Terrestrial List</h1>
+        
+  //       <AlienList aliens={aliens}/>
+  //     </div>
+  //   )
+    //make a new alien form, display it using state in the return, probably make a button have a createNewAlien slice of state (use a hook): shows NewAlienForm hides AlienList
+  // }
+// }
+// }
 
 const mapStateToProps = (state) => {
   return {

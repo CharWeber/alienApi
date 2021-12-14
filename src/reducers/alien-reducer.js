@@ -23,6 +23,11 @@ export default (state = defaultState, action) => {
         isLoaded: true,
         error: error
       })
+    // case c.CREATE_NEW_ALIEN:
+    //   return Object.assign({}, state, {
+    //     isLoaded: true,
+    //     aliens: 
+    //   })
       default:
       return state;
   }

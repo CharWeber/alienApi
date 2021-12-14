@@ -28,3 +28,25 @@ export const alienListCall = () => {
       });
   }
 }
+
+export const alienListPost = (newAlien) => {
+  const stringifiedAlien = JSON.stringify(newAlien);
+  return dispatch => {
+    dispatch(requestAlienList);
+    return fetch("https://localhost:5001/api/Aliens",
+    {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: stringifiedAlien
+    })
+      .then(response => response.json())
+      .then(
+        (jsonifiedResponse) => {
+          dispatch(getAlienListSuccess(jsonifiedResponse));
+        })
+      .catch((error) => {
+        dispatch(getFailure(error));
+      });
+  }
+}
+
