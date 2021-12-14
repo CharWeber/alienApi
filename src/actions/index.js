@@ -15,6 +15,7 @@ export const getFailure = (error) => ({
 })
 
 export const alienListCall = () => {
+  console.log("calling list")
   return dispatch => {
     dispatch(requestAlienList);
     return fetch("https://localhost:5001/api/Aliens")
@@ -39,10 +40,33 @@ export const alienListPost = (newAlien) => {
       headers: { 'Content-Type': 'application/json' },
       body: stringifiedAlien
     })
-      .then(response => response.json())
+    // .then(response => response.json())
+    .then(
+      (response) => {
+        if (response) {
+        dispatch(alienListCall());
+        }
+      })
+    .catch((error) => {
+      dispatch(getFailure(error));
+    })
+  }
+}
+
+export const alienListDelete = (id) => {
+  return dispatch => {
+    dispatch(requestAlienList);
+    return fetch(`https://localhost:5001/api/Aliens/${id}`,
+    {
+      method: 'DELETE',
+      headers: { 'accept': '*/*' }
+    })
+      // .then(response => response.json())
       .then(
-        (jsonifiedResponse) => {
-          dispatch(getAlienListSuccess(jsonifiedResponse));
+        (response) => {
+          if (response) {
+            dispatch(alienListCall());
+            }
         })
       .catch((error) => {
         dispatch(getFailure(error));

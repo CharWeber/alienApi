@@ -1,9 +1,10 @@
 import React, {useState, useEffect} from "react";
 import AlienList from "./AlienList";
 import { connect } from "react-redux";
-import { alienListCall, alienListPost } from '../actions';
+import { alienListCall, alienListPost, alienListDelete } from '../actions';
 import { useDispatch, useSelector } from "react-redux";
 import NewAlienForm from "./NewAlienForm";
+import AlienDetail from "./AlienDetail";
 
 // class AlienControl extends React.Component() {
 //   constructor(props) {
@@ -27,29 +28,54 @@ function AlienControl() {
   const dispatch = useDispatch();
   
   const [newForm, setNewForm] = useState(false);
-
+  const [selectedAlien, setSelectedAlien] = useState(null);
+  const [update, setUpdate] = useState(false);
+  
   useEffect(() => {
     // const { dispatch } = this.props;
     dispatch(alienListCall());
     // setAliens(this.state.aliens)
   }, [dispatch]);
   
-  console.log(aliens)
   let buttonText= '';
   let visibleState = null;
+
+
   
-  const handleNewAlien = (newAlien) => {
+ const handleNewAlien = (newAlien) => {
     dispatch(alienListPost(newAlien))
+    // setTimeout(() => {
+    //   dispatch(alienListCall());
+      setNewForm(false);
+    // }, 2000);
   }
 
+  const handleDeleteAlien = (id) => {
+    dispatch(alienListDelete(id))
+    // setTimeout(() => {
+    //   dispatch(alienListCall());
+      setSelectedAlien(null);
+    // }, 2000);
+  }
+
+  if(update){
+    dispatch(alienListCall());
+    setUpdate(false);
+  }
+
+
   if (newForm){
-    visibleState = <NewAlienForm handleNewAlien={handleNewAlien}/>
+    visibleState = <NewAlienForm handleNewAlien={handleNewAlien}/>;
+    buttonText = 'Back';
+  } else if (selectedAlien != null) {
+    visibleState = <AlienDetail alien={selectedAlien} handleDeleteAlien={handleDeleteAlien} setSelectedAlien={setSelectedAlien}/>
+    buttonText = 'New Alien'
   } else {
     visibleState = 
     <div>
-    <h1>MIB Extra Terrestrial List</h1>
-    <AlienList aliens={aliens}/>
-  </div>
+    <AlienList aliens={aliens} setSelectedAlien={setSelectedAlien}/>
+  </div>;
+    buttonText = 'New Alien';
   }
   
   
@@ -62,7 +88,7 @@ function AlienControl() {
         return(
           <div>
             {visibleState}
-            <button onClick={() => setNewForm(!newForm)}>New Alien</button>
+            <button onClick={() => setNewForm(!newForm)}>{buttonText}</button>
           </div>
     )
   
@@ -92,12 +118,12 @@ function AlienControl() {
 // }
 // }
 
-const mapStateToProps = (state) => {
-  return {
-    aliens: state.aliens,
-    isLoaded: state.isLoaded,
-    error: state.error,
-  }
-}
+// const mapStateToProps = (state) => {
+//   return {
+//     aliens: state.aliens,
+//     isLoaded: state.isLoaded,
+//     error: state.error,
+//   }
+// }
 
-export default connect(mapStateToProps)(AlienControl);
+export default AlienControl;

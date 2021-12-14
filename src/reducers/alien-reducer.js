@@ -3,7 +3,7 @@ import * as c from './../actions/ActionTypes'
 const defaultState = {
   isLoaded: false,
   aliens: [],
-  error: null
+  error: null,
 }
 
 export default (state = defaultState, action) => {
@@ -16,7 +16,7 @@ export default (state = defaultState, action) => {
     case c.GET_ALIEN_LIST_SUCCESS:
       return Object.assign({}, state, {
         isLoaded: true,
-        aliens: aliens
+        aliens: aliens,
       })
     case c.GET_FAILURE:
       return Object.assign({}, state, {

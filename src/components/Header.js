@@ -1,7 +1,8 @@
 import React from "react";
+import headerImage from "./../img/header-w-text.png";
 
 export default function Header(){
   return(
-    <h1>this is the header</h1>
+    <img src={headerImage} alt="Antony Gormley sculpture. Photo by Brian McMahon - @mcmre on Unsplash" />
   );
 }

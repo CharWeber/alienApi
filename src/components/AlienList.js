@@ -1,19 +1,26 @@
 import React from "react";
 import Alien from "./Alien";
+import PropTypes from 'prop-types'; 
 
 export default function AlienList(props){
-  const {aliens} = props
+  const { aliens, setSelectedAlien } = props
   return(
     <React.Fragment>
-      <h1>this is the start of the list</h1>
       {aliens.map((alien, index) => (
-        <Alien 
-        name={alien.name}
-        description={alien.description}
-        key={index}
-        />
+        <div onClick ={() => setSelectedAlien(alien)}>
+          <Alien
+          name={alien.name}
+          description={alien.description}
+          key={index}
+          />
+        </div>
 
       ))}
     </React.Fragment>
   )
+}
+
+AlienList.propTypes ={
+  aliens: PropTypes.array,
+  setSelectedAlien: PropTypes.func
 }
